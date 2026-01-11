@@ -1,10 +1,11 @@
 # Elango Portfolio Website
 
-A professional portfolio website for Elango, a Product Designer with 2+ years of experience.
+A professional portfolio website for Elango, a Product Designer with 10+ years of experience.
 
 ## Tech Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+
 
 ## Project Structure
 
