@@ -1,13 +1,10 @@
-# Jenny Portfolio Website
+# Elango Portfolio Website
 
-A professional portfolio website for Jenny, a Product Designer with 10+ years of experience.
+A professional portfolio website for Elango, a Product Designer with 2+ years of experience.
 
 ## Tech Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT (JSON Web Tokens)
 
 ## Project Structure
 
