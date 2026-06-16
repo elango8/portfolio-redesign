@@ -5,34 +5,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Elango - Product Designer Portfolio. 10+ years of experience in UI/UX, Web Design, and App Design.">
-    <meta name="keywords" content="Product Designer, UI/UX, Web Design, App Design, Portfolio">
-    <title>Elango's Portfolio | Product Designer</title>
+        content="Elango - Product Designer & Full-Stack Developer Portfolio. 2+ years of experience in UI/UX, Web Design, App Design, and Full-Stack Development.">
+    <meta name="keywords" content="Product Designer, UI/UX, Web Design, App Design, Portfolio, Full-Stack Developer">
+    <meta name="author" content="Elango">
+    <meta name="theme-color" content="#0B1120">
+    <title>Elango — Product Designer & Developer</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
+    <style>
+        /* Loading screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0B1120;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loading-screen.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(37, 99, 235, 0.15);
+            border-top-color: #2563EB;
+            border-right-color: #EF4444;
+            border-radius: 50%;
+            animation: loaderSpin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            margin-bottom: 1.5rem;
+        }
+
+        .loading-text {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: rgba(148, 163, 184, 0.8);
+            letter-spacing: 0.2em;
+            animation: loadPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loaderSpin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        @keyframes loadPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">INITIALIZING</div>
+    </div>
+
+    <!-- Three.js Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="custom-cursor-glow" id="customCursorGlow"></div>
+
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="mainHeader">
         <div class="container">
             <nav class="nav">
-                <a href="#" class="logo">
+                <a href="#" class="logo" data-magnetic>
                     <span class="logo-dot"></span>
                     Elango
                 </a>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#about">About Me</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#skills">Skills</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <a href="#contact" class="btn btn-primary">Hire Me</a>
+                <a href="#contact" class="btn btn-primary" data-magnetic>Hire Me</a>
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -44,29 +140,31 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="hero-glow-1"></div>
+        <div class="hero-glow-2"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title">
+                    <h1 class="hero-title" data-aos="fade-up">
                         I'm <span class="highlight">Elango</span>,<br>
-                        Product Designer & Front-end Developer
+                        UI & UX Designer & Full-Stack Developer
                     </h1>
-                    <p class="hero-description">
+                    <p class="hero-description" data-aos="fade-up">
                         I design and develop beautiful and functional digital products that help businesses grow.
                         With over 2+ years of experience, I bring creativity and strategy together
                         to deliver exceptional user experiences and interfaces.
                     </p>
-                    <div class="hero-buttons">
-                        <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
-                        <a href="#contact" class="btn btn-outline">Contact Me</a>
+                    <div class="hero-buttons" data-aos="fade-up">
+                        <a href="#portfolio" class="btn btn-primary" data-magnetic>View Portfolio</a>
+                        <a href="#contact" class="btn btn-outline" data-magnetic>Contact Me</a>
                     </div>
                 </div>
                 <div class="hero-image">
                     <div class="hero-image-wrapper">
-                        <img src="images/my photo 2.png" alt="Elango - Product Designer" class="hero-photo">
-
+                        <img src="images/my photo 2.png" alt="Elango - Product Designer" class="hero-photo"
+                            loading="eager">
                     </div>
-                    <div class=" floating-card experience-badge">
+                    <div class="floating-card experience-badge">
                         <span class="experience-number">2+</span>
                         <span class="experience-text">Years<br>Experience</span>
                     </div>
@@ -75,16 +173,13 @@
                         <span>UI/UX Design</span>
                     </div>
                     <div class="floating-card card-2">
-                        <div class="floating-icon">📱</div>
-                        <span>Database</span>
+                        <div class="floating-icon">💻</div>
+                        <span>Full-stack Development</span>
                     </div>
-                    <div class="floating-card card-3">
-                        <div class="floating-icon">🖥️</div>
-                        <span>Web development</span>
-                    </div>
+
                     <div class="floating-card card-4">
                         <div class="floating-icon">📱</div>
-                        <span>Flutter</span>
+                        <span>Mobile-App Development</span>
                     </div>
                 </div>
             </div>
@@ -95,64 +190,215 @@
     <section class="services" id="services">
         <div class="container">
             <div class="section-header">
+                <span class="section-subtitle">// What I Do</span>
                 <h2 class="section-title">My <span class="highlight">Services</span></h2>
             </div>
             <div class="services-grid">
-                <div class="service-card" data-aos="fade-up">
+                <div class="service-card glass-panel" data-aos="fade-up">
                     <div class="service-icon">
                         <img src="images/web-design.png" alt="Web Design">
                     </div>
                     <h3>Web Design</h3>
                     <p>Creating stunning, responsive websites that captivate users and drive conversions.</p>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card glass-panel" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-icon">
                         <img src="images/ui.png" alt="UI/UX Design">
                     </div>
                     <h3>UI/UX Design</h3>
                     <p>Designing intuitive user interfaces with seamless user experiences.</p>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card glass-panel" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-icon">
                         <img src="images/front-end-programming.png" alt="App Design">
                     </div>
                     <h3>App Design</h3>
                     <p>Crafting beautiful mobile applications that users love to interact with.</p>
                 </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card glass-panel" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-icon">
-                        <img src="images/coding.png" alt="dev">
+                        <img src="images/coding.png" alt="Web Development">
                     </div>
-                    <h3>Web development</h3>
-                    <p>Creating visual content that communicates your brand message effectively.</p>
+                    <h3>Fullstack Web Development</h3>
+                    <p>Creating functional and scalable web applications with modern technologies.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Work Experience Section -->
-    <section class="experience" id="about">
+    <!-- Interactive Skills Universe Section -->
+    <section class="skills-universe-section" id="skills">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">My <span class="highlight">Work Experience</span></h2>
+                <span class="section-subtitle">// My Tech Stack</span>
+                <h2 class="section-title">Skills <span class="highlight">Universe</span></h2>
             </div>
-            <div class="experience-grid">
-                <div class="experience-item" data-aos="fade-right">
-                    <div class="experience-company">
-                        <h4>Knewton Tech</h4>
-                        <span class="experience-role">Web Developer intern</span>
+            <div class="skills-layout">
+                <div class="skills-text-content" data-aos="fade-right">
+                    <p>A creative full-stack developer and designer with expertise across modern design tools
+                        and development frameworks. I blend design thinking with engineering precision to
+                        build products people love.</p>
+
+                    <div class="skills-list-detail">
+                        <div class="skill-detail-card glass-panel">
+                            <div class="skill-detail-header">
+                                <span>UI Design</span>
+                                <span style="color: var(--primary-red);">95%</span>
+                            </div>
+                            <div class="skill-detail-bar">
+                                <div class="skill-detail-fill" data-fill="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-detail-card glass-panel">
+                            <div class="skill-detail-header">
+                                <span>UX Design</span>
+                                <span style="color: var(--primary-red);">98%</span>
+                            </div>
+                            <div class="skill-detail-bar">
+                                <div class="skill-detail-fill" data-fill="98"></div>
+                            </div>
+                        </div>
+                        <div class="skill-detail-card glass-panel">
+                            <div class="skill-detail-header">
+                                <span>Full-stack Development</span>
+                                <span style="color: var(--primary-red);">90%</span>
+                            </div>
+                            <div class="skill-detail-bar">
+                                <div class="skill-detail-fill" data-fill="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-detail-card glass-panel">
+                            <div class="skill-detail-header">
+                                <span>Prototyping</span>
+                                <span style="color: var(--primary-red);">95%</span>
+                            </div>
+                            <div class="skill-detail-bar">
+                                <div class="skill-detail-fill" data-fill="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-detail-card glass-panel">
+                            <div class="skill-detail-header">
+                                <span>Python</span>
+                                <span style="color: var(--primary-red);">90%</span>
+                            </div>
+                            <div class="skill-detail-bar">
+                                <div class="skill-detail-fill" data-fill="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-detail-card glass-panel">
+                            <div class="skill-detail-header">
+                                <span>Flutter</span>
+                                <span style="color: var(--primary-red);">75%</span>
+                            </div>
+                            <div class="skill-detail-bar">
+                                <div class="skill-detail-fill" data-fill="75"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="experience-item" data-aos="fade-left">
-                    <div class="experience-company">
-                        <h4>Internshala</h4>
-                        <span class="experience-role">Web Developer intern</span>
+                <div class="skills-universe-wrapper" data-aos="fade-left">
+                    <canvas id="skills-canvas"></canvas>
+                    <div class="skills-universe-instructions">
+                        <span>✦</span> Hover to interact with nodes
                     </div>
                 </div>
-                <div class="experience-item" data-aos="fade-right">
-                    <div class="experience-company">
-                        <h4>Internsforge</h4>
-                        <span class="experience-role">Campus Ambassador</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Timeline -->
+    <section class="timeline-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">// My Journey</span>
+                <h2 class="section-title">Experience & <span class="highlight">Education</span></h2>
+            </div>
+            <div class="timeline-split">
+                <!-- Work Experience Column -->
+                <div>
+                    <h3 class="timeline-column-title">
+                        <span class="icon">💼</span> Work Experience
+                    </h3>
+                    <div class="timeline-container-vertical">
+                        <div class="timeline-line-vertical">
+                            <div class="timeline-line-fill"></div>
+                        </div>
+
+                        <div class="timeline-node" data-aos="fade-up">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card-content glass-panel">
+                                <div class="timeline-header-meta">
+                                    <h4>Knewton Tech</h4>
+                                    <span class="timeline-date-tag">2024</span>
+                                </div>
+                                <span class="timeline-role">Web Developer Intern</span>
+                                <p>Contributed to full-stack web development projects, building modern responsive
+                                    interfaces and backend APIs.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-node" data-aos="fade-up" data-aos-delay="100">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card-content glass-panel">
+                                <div class="timeline-header-meta">
+                                    <h4>Internshala</h4>
+                                    <span class="timeline-date-tag">2024</span>
+                                </div>
+                                <span class="timeline-role">Web Developer Intern</span>
+                                <p>Worked on production-level web applications, honing skills in modern frontend
+                                    frameworks and design systems.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-node" data-aos="fade-up" data-aos-delay="200">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card-content glass-panel">
+                                <div class="timeline-header-meta">
+                                    <h4>Internsforge</h4>
+                                    <span class="timeline-date-tag">2024</span>
+                                </div>
+                                <span class="timeline-role">Campus Ambassador</span>
+                                <p>Led campus outreach programs, fostering tech community engagement and organizing
+                                    student developer events.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Column -->
+                <div>
+                    <h3 class="timeline-column-title">
+                        <span class="icon">🎓</span> Education
+                    </h3>
+                    <div class="timeline-container-vertical">
+                        <div class="timeline-line-vertical">
+                            <div class="timeline-line-fill"></div>
+                        </div>
+
+                        <div class="timeline-node" data-aos="fade-up">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card-content glass-panel">
+                                <div class="timeline-header-meta">
+                                    <h4>Higher Secondary Education</h4>
+                                    <span class="timeline-date-tag">2020 – 2023</span>
+                                </div>
+                                <span class="timeline-institution">Muthamizh GHSS Arasampatti</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-node" data-aos="fade-up" data-aos-delay="100">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card-content glass-panel">
+                                <div class="timeline-header-meta">
+                                    <h4>B.Tech — AI & Data Science</h4>
+                                    <span class="timeline-date-tag">2023 – 2027</span>
+                                </div>
+                                <span class="timeline-institution">Kangeyam Institute of Technology</span>
+                                <div class="timeline-cgpa">
+                                    CGPA: <span class="timeline-cgpa-score">8.18</span> ★
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,10 +409,12 @@
     <section class="certifications" id="certifications">
         <div class="container">
             <div class="section-header">
+                <span class="section-subtitle">// Credentials</span>
                 <h2 class="section-title">My <span class="highlight">Certifications</span></h2>
             </div>
             <div class="certifications-container">
-                <button class="cert-nav-btn cert-nav-prev" id="certPrevBtn" aria-label="Previous certificates">
+                <button class="cert-nav-btn cert-nav-prev" id="certPrevBtn" aria-label="Previous certificates"
+                    data-magnetic>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
@@ -183,7 +431,7 @@
                                 <span class="certification-issuer">Internshala</span>
                                 <span class="certification-year">2024</span>
                             </div>
-                            <span class="view-cert-hint">Click to view</span>
+                            <span class="view-cert-hint">↗ Click to view</span>
                         </div>
                         <div class="certification-item" data-aos="fade-up" data-aos-delay="100"
                             data-certificate="images/google.png">
@@ -192,10 +440,10 @@
                             </div>
                             <div class="certification-details">
                                 <h4>UI/UX Design Foundation</h4>
-                                <span class="certification-issuer">Google - Coursera</span>
+                                <span class="certification-issuer">Google — Coursera</span>
                                 <span class="certification-year">2025</span>
                             </div>
-                            <span class="view-cert-hint">Click to view</span>
+                            <span class="view-cert-hint">↗ Click to view</span>
                         </div>
                         <div class="certification-item" data-aos="fade-up" data-aos-delay="200"
                             data-certificate="images/gfg.png">
@@ -207,7 +455,7 @@
                                 <span class="certification-issuer">GeeksforGeeks</span>
                                 <span class="certification-year">2025</span>
                             </div>
-                            <span class="view-cert-hint">Click to view</span>
+                            <span class="view-cert-hint">↗ Click to view</span>
                         </div>
                         <div class="certification-item" data-aos="fade-up" data-aos-delay="300"
                             data-certificate="images/hacker.png">
@@ -219,7 +467,7 @@
                                 <span class="certification-issuer">HackerRank</span>
                                 <span class="certification-year">2024</span>
                             </div>
-                            <span class="view-cert-hint">Click to view</span>
+                            <span class="view-cert-hint">↗ Click to view</span>
                         </div>
                         <div class="certification-item" data-aos="fade-up" data-aos-delay="400"
                             data-certificate="images/figma.png">
@@ -231,7 +479,7 @@
                                 <span class="certification-issuer">Simplylearn</span>
                                 <span class="certification-year">2025</span>
                             </div>
-                            <span class="view-cert-hint">Click to view</span>
+                            <span class="view-cert-hint">↗ Click to view</span>
                         </div>
                         <div class="certification-item" data-aos="fade-up" data-aos-delay="500"
                             data-certificate="images/scalar.png">
@@ -243,11 +491,12 @@
                                 <span class="certification-issuer">Scalar</span>
                                 <span class="certification-year">2025</span>
                             </div>
-                            <span class="view-cert-hint">Click to view</span>
+                            <span class="view-cert-hint">↗ Click to view</span>
                         </div>
                     </div>
                 </div>
-                <button class="cert-nav-btn cert-nav-next" id="certNextBtn" aria-label="Next certificates">
+                <button class="cert-nav-btn cert-nav-next" id="certNextBtn" aria-label="Next certificates"
+                    data-magnetic>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -255,7 +504,7 @@
                 </button>
             </div>
             <div class="resume-btn-container">
-                <button class="btn btn-primary" id="viewResumeBtn">View Resume</button>
+                <button class="btn btn-primary" id="viewResumeBtn" data-magnetic>View Resume</button>
             </div>
         </div>
     </section>
@@ -270,34 +519,6 @@
         </div>
     </div>
 
-    <!-- Education Section -->
-    <section class="education" id="education">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">My <span class="highlight">Education</span></h2>
-            </div>
-            <div class="education-grid">
-                <div class="education-item" data-aos="fade-left">
-                    <div class="education-icon">📚</div>
-                    <div class="education-details">
-                        <h4>Higher Secondary Education</h4>
-                        <span class="education-institution">MUTHAMIZH GHSS ARASAMPATTI </span>
-                        <span class="education-year">2020 - 2023</span>
-                    </div>
-                </div>
-                <div class="education-item" data-aos="fade-right">
-                    <div class="education-icon">🎓</div>
-                    <div class="education-details">
-                        <h4>Bachelor of Technology - Artificial Intelligence and Data Science</h4>
-                        <span class="education-institution">Kangeyam Institute of Technology</span>
-                        <span class="education-year">2023 - 2027</span>
-                        <h5>CGPA: <span style="font-weight: bold;color: rgb(143, 93, 1);">8.14</span></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Resume Modal -->
     <div class="resume-modal" id="resumeModal">
         <div class="resume-modal-content">
@@ -306,8 +527,8 @@
             <div class="resume-viewer">
                 <iframe src="images/Elango T.pdf" id="resumeFrame"></iframe>
             </div>
-            <a href="images/Elango T.pdf" download class="btn btn-primary" style="margin-top: 1rem;">Download
-                Resume</a>
+            <a href="images/Elango T.pdf" download class="btn btn-primary" style="margin-top: 1.5rem;"
+                data-magnetic>Download Resume</a>
         </div>
     </div>
 
@@ -316,15 +537,11 @@
         <div class="container">
             <div class="why-hire-content">
                 <div class="why-hire-image" data-aos="fade-right">
-                    <img src="images/elango.jpg" alt="Elango's working">
+                    <img src="images/elango.jpg" alt="Elango working">
                     <div class="skill-badge skill-1">
                         <span class="skill-percent">95%</span>
                         <span class="skill-name">UI Design</span>
                     </div>
-                    <!-- <div class="skill-badge skill-2">
-                        <span class="skill-percent">90%</span>
-                        <span class="skill-name">UX Research</span>
-                    </div> -->
                     <div class="skill-badge skill-6">
                         <span class="skill-percent">98%</span>
                         <span class="skill-name">UX Design</span>
@@ -335,7 +552,7 @@
                     </div>
                     <div class="skill-badge skill-4">
                         <span class="skill-percent">95%</span>
-                        <span class="skill-name">Front-end development</span>
+                        <span class="skill-name">Full-stack</span>
                     </div>
                     <div class="skill-badge skill-5">
                         <span class="skill-percent">80%</span>
@@ -343,7 +560,7 @@
                     </div>
                 </div>
                 <div class="why-hire-text" data-aos="fade-left">
-                    <h2 class="section-title">Why <span class="highlight">Hire me</span>?</h2>
+                    <h2 class="section-title">Why <span class="highlight">Hire Me</span>?</h2>
                     <p>I bring a unique combination of creativity, technical skills, and business acumen to every
                         project. My approach is user-centered, data-driven, and focused on delivering measurable
                         results.</p>
@@ -353,7 +570,7 @@
                         <li><span class="check-icon">✓</span> Strong problem-solving skills</li>
                         <li><span class="check-icon">✓</span> Excellent communication</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Get in Touch</a>
+                    <a href="#contact" class="btn btn-primary" data-magnetic>Get in Touch</a>
                 </div>
             </div>
         </div>
@@ -363,13 +580,13 @@
     <section class="portfolio" id="portfolio">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Lets have a look at</p>
-                <h2 class="section-title">my <span class="highlight">Portfolio</span></h2>
+                <span class="section-subtitle">// Recent Work</span>
+                <h2 class="section-title">My <span class="highlight">Portfolio</span></h2>
             </div>
 
             <div class="portfolio-container">
                 <button class="portfolio-nav-btn portfolio-nav-prev" id="portfolioPrevBtn"
-                    aria-label="Previous projects">
+                    aria-label="Previous projects" data-magnetic>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="15 18 9 12 15 6"></polyline>
@@ -379,83 +596,85 @@
                 <div class="portfolio-wrapper">
                     <div class="portfolio-slider" id="portfolioSlider">
                         <!-- Project 1 -->
-                        <div class="portfolio-card" data-aos="fade-up">
+                        <div class="portfolio-card glass-panel" data-aos="fade-up">
                             <div class="portfolio-image">
-                                <img src="images/fashionstore (1).png" alt="fashionstore image">
+                                <img src="images/fashionstore (1).png" alt="Fashion Store" loading="lazy">
                                 <div class="portfolio-overlay">
                                     <a href="#" class="portfolio-link">View Project</a>
                                 </div>
                             </div>
                             <div class="portfolio-info">
-                                <h3>Web Design</h3>
+                                <h3>Fashion Store</h3>
+                                <p>Web Design</p>
                                 <p>Figma</p>
-                                <p>Fashion Store</p>
-                            </div>
-                        </div>
-
-                        <!--Project S-->
-                        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="300">
-                            <div class="portfolio-image">
-                                <img src="images/Screenshot 2026-01-10 205639.png" alt="food delivery app">
-                                <div class="portfolio-overlay">
-                                    <a href="#" class="portfolio-link">View Project</a>
-                                </div>
-                            </div>
-                            <div class="portfolio-info">
-                                <h3>Front-end Development</h3>
-                                <p>HTML, CSS, JS</p>
-                                <p>zeefast-Food Delivery App</p>
                             </div>
                         </div>
 
                         <!-- Project 2 -->
-                        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="portfolio-card glass-panel" data-aos="fade-up" data-aos-delay="100">
                             <div class="portfolio-image">
-                                <img src="images/vesthotel.png" alt="vesthotel-image">
+                                <img src="images/Screenshot 2026-01-10 205639.png" alt="Zeefast Food Delivery"
+                                    loading="lazy">
                                 <div class="portfolio-overlay">
                                     <a href="#" class="portfolio-link">View Project</a>
                                 </div>
                             </div>
                             <div class="portfolio-info">
-                                <h3>Front-end Development</h3>
+                                <h3>Zeefast — Food Delivery</h3>
+                                <p>Front-end Development</p>
                                 <p>HTML, CSS, JS</p>
-                                <p>Vesthotel website</p>
                             </div>
                         </div>
 
                         <!-- Project 3 -->
-                        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="portfolio-card glass-panel" data-aos="fade-up" data-aos-delay="200">
                             <div class="portfolio-image">
-                                <img src="images/fashionstore (5).png" alt="fruit App">
+                                <img src="images/vesthotel.png" alt="Vesthotel Website" loading="lazy">
                                 <div class="portfolio-overlay">
                                     <a href="#" class="portfolio-link">View Project</a>
                                 </div>
                             </div>
                             <div class="portfolio-info">
-                                <h3>App Design</h3>
-                                <p>Figma</p>
-                                <p>shoify App</p>
+                                <h3>Vesthotel Website</h3>
+                                <p>Front-end Development</p>
+                                <p>HTML, CSS, JS</p>
                             </div>
                         </div>
 
                         <!-- Project 4 -->
-                        <div class="portfolio-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="portfolio-card glass-panel" data-aos="fade-up" data-aos-delay="300">
                             <div class="portfolio-image">
-                                <img src="images/tablebook.png" alt="Table booking Dashboard">
+                                <img src="images/fashionstore (5).png" alt="Shoify App" loading="lazy">
                                 <div class="portfolio-overlay">
                                     <a href="#" class="portfolio-link">View Project</a>
                                 </div>
                             </div>
                             <div class="portfolio-info">
-                                <h3>UI/UX Design</h3>
+                                <h3>Shoify App</h3>
+                                <p>App Design</p>
                                 <p>Figma</p>
-                                <p>Table Booking Dashboard</p>
+                            </div>
+                        </div>
+
+                        <!-- Project 5 -->
+                        <div class="portfolio-card glass-panel" data-aos="fade-up" data-aos-delay="400">
+                            <div class="portfolio-image">
+                                <img src="images/tablebook.png" alt="Table Booking Dashboard" loading="lazy">
+                                <div class="portfolio-overlay">
+                                    <a href="#" class="portfolio-link">View Project</a>
+                                </div>
+                            </div>
+                            <div class="portfolio-info">
+                                <h3>Table Booking Dashboard</h3>
+                                <p>UI/UX Design</p>
+                                <p>Figma</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button class="portfolio-nav-btn portfolio-nav-next" id="portfolioNextBtn" aria-label="Next projects">
+                <button class="portfolio-nav-btn portfolio-nav-next" id="portfolioNextBtn" aria-label="Next projects"
+                    data-magnetic>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -463,13 +682,13 @@
                 </button>
             </div>
 
-            <div class="portfolio-featured" data-aos="fade-up" style="margin-top: 2.5rem;">
+            <!-- Featured Project -->
+            <div class="portfolio-featured glass-panel" data-aos="fade-up" style="margin-top: 2rem;">
                 <div class="featured-content">
                     <h3>Table Booking Dashboard</h3>
                     <p>A comprehensive Table Booking Dashboard application designed to provide seamless ordering
-                        experience for
-                        users and efficient management tools for restaurants.</p>
-                    <a href="#" class="btn btn-outline">View Case Study</a>
+                        experience for users and efficient management tools for restaurants.</p>
+                    <a href="#" class="btn btn-outline" id="viewCaseStudyBtn" data-magnetic>View Case Study</a>
                 </div>
                 <div class="featured-image">
                     <img src="images/tablebook.png" alt="Table Booking Dashboard">
@@ -478,20 +697,83 @@
         </div>
     </section>
 
+    <!-- Case Study Slide-Out Panel -->
+    <div class="case-study-overlay" id="caseStudyOverlay"></div>
+    <div class="case-study-panel" id="caseStudyPanel">
+        <div class="case-study-header">
+            <h3>Table Booking Dashboard — <span class="highlight">Case Study</span></h3>
+            <button class="case-study-close" id="caseStudyClose">&times;</button>
+        </div>
+        <div class="case-study-body">
+            <img src="images/tablebook.png" alt="Table Booking Banner" class="case-study-banner">
+
+            <div class="case-study-grid">
+                <div class="case-study-block">
+                    <h4 class="case-study-section-title">🔍 Problem</h4>
+                    <p>Restaurant owners struggled with manual table reservation processes, leading to
+                        overbooking, miscommunication, and poor customer satisfaction. Customers wanted an
+                        intuitive way to browse, reserve, and manage their dining experiences.</p>
+                </div>
+                <div class="case-study-block">
+                    <h4 class="case-study-section-title">💡 Solution</h4>
+                    <p>Designed a comprehensive dashboard that streamlines the entire table booking flow — from
+                        real-time availability checks to automated confirmations — providing both restaurant
+                        staff and customers with a seamless experience.</p>
+                </div>
+            </div>
+
+            <div class="case-study-block" style="margin-bottom: 2.5rem;">
+                <h4 class="case-study-section-title">🛠 Technologies</h4>
+                <div class="case-study-tags">
+                    <span class="case-study-tag">Figma</span>
+                    <span class="case-study-tag">UI/UX Design</span>
+                    <span class="case-study-tag">Prototyping</span>
+                    <span class="case-study-tag">User Research</span>
+                    <span class="case-study-tag">Wireframing</span>
+                </div>
+            </div>
+
+            <div class="case-study-block" style="margin-bottom: 2.5rem;">
+                <h4 class="case-study-section-title">📐 Design Process</h4>
+                <div class="wireframe-visualizer">
+                    <div class="wireframe-slide">
+                        <h5>Step 1 — User Research & Discovery</h5>
+                        <div class="wireframe-slide-box">Interviews · Surveys · Competitive Analysis</div>
+                    </div>
+                    <div class="wireframe-slide">
+                        <h5>Step 2 — Information Architecture</h5>
+                        <div class="wireframe-slide-box">User Flows · Sitemaps · Card Sorting</div>
+                    </div>
+                    <div class="wireframe-slide">
+                        <h5>Step 3 — Visual Design & Prototyping</h5>
+                        <div class="wireframe-slide-box">High-Fi Mockups · Interactive Prototypes · Design System
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-study-block">
+                <h4 class="case-study-section-title">📊 Impact</h4>
+                <p>The redesigned dashboard reduced booking time by 60%, improved customer satisfaction scores
+                    by 40%, and enabled restaurants to manage 3× more reservations with the same staff.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Testimonials Section -->
     <section class="testimonials">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Testimonials That</p>
-                <h2 class="section-title">Speak to <span class="highlight">My Results</span></h2>
+                <span class="section-subtitle">// Testimonials</span>
+                <h2 class="section-title">What Clients <span class="highlight">Say</span></h2>
             </div>
             <div class="testimonials-grid">
-                <div class="testimonial-card" data-aos="fade-up">
+                <div class="testimonial-card glass-panel" data-aos="fade-up">
                     <div class="testimonial-header">
-                        <img src="images/boy.png" alt="Client">
+                        <img src="images/woman.png" alt="Bhavana">
                         <div class="testimonial-info">
-                            <h4>Ragavan</h4>
-                            <span>CEO, Crackit360</span>
+                            <h4>Bhavana</h4>
+                            <span>Crackit360</span>
                         </div>
                     </div>
                     <div class="testimonial-rating">
@@ -501,14 +783,14 @@
                         <span class="star">★</span>
                         <span class="star">★</span>
                     </div>
-                    <p>"Elango delivered exceptional work on our mobile app redesign. He has a attention to detail and
+                    <p>"Elango delivered exceptional work on our mobile app redesign. His attention to detail and
                         user-centric approach resulted in a 40% increase in user engagement."</p>
                 </div>
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card glass-panel" data-aos="fade-up" data-aos-delay="100">
                     <div class="testimonial-header">
-                        <img src="images/woman.png" alt="Client">
+                        <img src="images/boy.png" alt="Kaviyarasan">
                         <div class="testimonial-info">
-                            <h4>Reena</h4>
+                            <h4>Kaviyarasan</h4>
                             <span>Product Manager, Crackit360</span>
                         </div>
                     </div>
@@ -539,7 +821,7 @@
                     <span class="cta-tag">User Research</span>
                     <span class="cta-tag">Website Development</span>
                 </div>
-                <a href="#contact" class="btn btn-primary btn-large">Start Project</a>
+                <a href="#contact" class="btn btn-primary btn-large" data-magnetic>Start Project</a>
             </div>
         </div>
     </section>
@@ -548,53 +830,83 @@
     <section class="contact" id="contact">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Lets <span class="highlight">Connect</span> there</h2>
+                <span class="section-subtitle">// Get in Touch</span>
+                <h2 class="section-title">Let's <span class="highlight">Connect</span></h2>
             </div>
             <div class="contact-content">
                 <div class="contact-info" data-aos="fade-right">
-                    <div class="contact-item">
+                    <div class="contact-item glass-panel">
                         <div class="contact-icon">📧</div>
                         <div>
                             <h4>Email</h4>
-                            <p>elangoselvan46@gmail.com</p>
+                            <p>elangoworkmail66@gmail.com</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item glass-panel">
                         <div class="contact-icon">📱</div>
                         <div>
                             <h4>Phone</h4>
                             <p>9344377644</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item glass-panel">
                         <div class="contact-icon">📍</div>
                         <div>
                             <h4>Location</h4>
-                            <p>Krishnagiri ,Tamilnadu, India</p>
+                            <p>Krishnagiri, Tamilnadu, India</p>
                         </div>
                     </div>
                     <div class="social-links">
-                        <a href="www.linkedin.com/in/elangots96" class="social-link" aria-label="LinkedIn">in</a>
-                        <a href="https://twitter.com/elango8" class="social-link" aria-label="Twitter">𝕏</a>
-                        <a href="#" class="social-link" aria-label="Dribbble">😺</a>
-                        <a href="#" class="social-link" aria-label="Behance">Bē</a>
+                        <a href="www.linkedin.com/in/elangot66" class="social-link" aria-label="LinkedIn"
+                            target="_blank" rel="noopener" data-magnetic>in</a>
+                        <a href="https://twitter.com/elango8" class="social-link" aria-label="Twitter" target="_blank"
+                            rel="noopener" data-magnetic>𝕏</a>
+                        <a href="https://github.com/elango8" class="social-link" aria-label="GitHub" data-magnetic>😺</a>
+                        <a href="#" class="social-link" aria-label="Behance" data-magnetic>Bē</a>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm" data-aos="fade-left">
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Your Name" required>
+
+                <!-- Developer Terminal Contact Form -->
+                <div class="terminal-window" data-aos="fade-left">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="terminal-button close"></span>
+                            <span class="terminal-button minimize"></span>
+                            <span class="terminal-button maximize"></span>
+                        </div>
+                        <span class="terminal-title">guest@elango:~/contact</span>
                     </div>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Your Email" required>
+                    <div class="terminal-body">
+                        <div class="terminal-output" id="terminalOutput">
+                            <div class="terminal-line"><span class="system">→ Welcome to Elango's
+                                    terminal.</span></div>
+                            <div class="terminal-line"><span class="system">→ Fill in the fields below to send me
+                                    a message.</span></div>
+                            <div class="terminal-line"><span class="success">→ System ready.</span></div>
+                        </div>
+                        <form class="terminal-form-inputs" id="contactForm">
+                            <div class="terminal-input-group">
+                                <span class="terminal-prompt">$</span>
+                                <input type="text" class="terminal-input" name="name" placeholder="your_name" required>
+                            </div>
+                            <div class="terminal-input-group">
+                                <span class="terminal-prompt">$</span>
+                                <input type="email" class="terminal-input" name="email" placeholder="your_email"
+                                    required>
+                            </div>
+                            <div class="terminal-input-group">
+                                <span class="terminal-prompt">$</span>
+                                <input type="text" class="terminal-input" name="subject" placeholder="subject">
+                            </div>
+                            <div class="terminal-input-group">
+                                <span class="terminal-prompt">$</span>
+                                <input type="text" class="terminal-input" name="message" placeholder="your_message"
+                                    required>
+                            </div>
+                            <button type="submit" class="terminal-submit-btn" data-magnetic>./send_message.sh</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="subject" placeholder="Subject">
-                    </div>
-                    <div class="form-group">
-                        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                </form>
+                </div>
             </div>
         </div>
     </section>
@@ -607,7 +919,7 @@
                     <span class="logo-dot"></span>
                     Elango
                 </div>
-                <p class="footer-text">© 2026 Elango portfolio. All rights reserved💙</p>
+                <p class="footer-text">© 2026 Elango portfolio. All rights reserved 💙</p>
                 <div class="footer-links">
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
@@ -616,6 +928,15 @@
         </div>
     </footer>
 
+    <script>
+        // Dismiss loading screen after everything initializes
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                var loader = document.getElementById('loadingScreen');
+                if (loader) loader.classList.add('loaded');
+            }, 800);
+        });
+    </script>
     <script src="main.js"></script>
 </body>
 
